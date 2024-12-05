@@ -1,7 +1,9 @@
 package com.banking.transactions.controller;
 
 import com.banking.transactions.model.TransactionDTO;
+import com.banking.transactions.model.TransactionList;
 import com.banking.transactions.model.UserAccount;
+
 import com.banking.transactions.service.TransactionService;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,4 +25,10 @@ public class TransactionController {
     public TransactionDTO transferFunds(@RequestBody TransactionDTO transaction) {
         return transaction_service.transferFunds(transaction);
     }
+
+    @GetMapping("/transactions/{id}")
+    public TransactionList getAccountTransactions(@PathVariable long id) {
+        return transaction_service.getAccountTransactions(id);
+    }
+
 }

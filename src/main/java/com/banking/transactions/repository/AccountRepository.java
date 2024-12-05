@@ -1,6 +1,9 @@
 package com.banking.transactions.repository;
 
+import com.banking.transactions.repository.TransactionRepository;
+
 import com.banking.transactions.model.UserAccount;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -18,8 +21,13 @@ public class AccountRepository {
     }
 
     public void updateBalance(long account_id, double funds_moved){
-        UserAccount account = accounts.stream().filter(a -> a.getId() == account_id).findFirst().get();
+        //Would've been more efficient to just use a(Id-1) but this better for if change Id naming system
+        UserAccount account = findAccountById(account_id);
         account.setBalance(account.getBalance()+funds_moved);
         System.out.println(account.getId() + " " + account.getBalance()); // Test
+    }
+
+    private UserAccount findAccountById(long account_id){
+        return accounts.stream().filter(a -> a.getId() == account_id).findFirst().get();
     }
 }
