@@ -12,7 +12,8 @@ public class AccountRepository {
     private List<UserAccount> accounts = new ArrayList<UserAccount>();
 
     public UserAccount createAccount(UserAccount account) {
+        account.setId(accounts.size() + 1);
         accounts.add(account);
-        return account;
+        return account; //check
     }
 }
