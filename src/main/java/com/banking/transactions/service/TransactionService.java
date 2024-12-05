@@ -16,4 +16,10 @@ public class TransactionService {
         //UserAccount account = new UserAccount(first_name, last_name, initial_balance);
         return account_repository.createAccount(account);
     }
+
+    public TransactionDTO transferFunds(TransactionDTO transaction) {
+        account_repository.updateBalance(transaction.src_account(), transaction.amount());
+        account_repository.updateBalance(transaction.dest_account(), -transaction.amount());
+        return transaction;
+    }
 }
