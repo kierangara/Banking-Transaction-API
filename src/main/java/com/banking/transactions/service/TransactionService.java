@@ -1,7 +1,6 @@
 package com.banking.transactions.service;
 
-import com.banking.transactions.exceptions.InvalidAmountException;
-import com.banking.transactions.exceptions.MissingInformationException;
+import com.banking.transactions.model.AccountDTO;
 import com.banking.transactions.model.TransactionList;
 import com.banking.transactions.repository.AccountRepository;
 import com.banking.transactions.model.UserAccount;
@@ -18,15 +17,17 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    public UserAccount createAccount(UserAccount account) {
-        //UserAccount account = new UserAccount(firstName, lastName, initial_balance);
-        InputValidation.ValidateAccountInput(account);
-        account = accountRepository.createAccount(account);
+    public UserAccount createAccount(AccountDTO accountDTO) {
+        InputValidation.ValidateAccountInput(accountDTO);
+        UserAccount account = accountRepository.createAccount(accountDTO);
         transactionRepository.createTransactionList(account.getId());
         return account;
     }
 
-    //Invalidates usage of DTO? Perform operation in repository layer?
+    public UserAccount getAccount(long accountId) {
+        return accountRepository.getAccount(accountId);
+    }
+
     public TransactionDTO transferFunds(TransactionDTO transaction){
         InputValidation.ValidateTransactionInput(transaction);
         accountRepository.updateBalance(transaction.getSrcAccount(), -transaction.getAmount());

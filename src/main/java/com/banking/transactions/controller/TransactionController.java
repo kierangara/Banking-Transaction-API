@@ -1,14 +1,12 @@
 package com.banking.transactions.controller;
 
+import com.banking.transactions.model.AccountDTO;
 import com.banking.transactions.model.TransactionDTO;
 import com.banking.transactions.model.TransactionList;
 import com.banking.transactions.model.UserAccount;
 
 import com.banking.transactions.service.TransactionService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.pulsar.PulsarProperties;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -19,8 +17,13 @@ public class TransactionController {
     private TransactionService transaction_service;
 
     @PostMapping("/accounts")
-    public UserAccount createAccount(@RequestBody UserAccount user_account) {
+    public UserAccount createAccount(@RequestBody AccountDTO user_account) {
         return transaction_service.createAccount(user_account);
+    }
+
+    @GetMapping("/accounts/{id}")
+    public UserAccount getAccount(@PathVariable long id) {
+        return transaction_service.getAccount(id);
     }
 
     @PostMapping("/transactions")

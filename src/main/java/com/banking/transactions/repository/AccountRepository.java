@@ -3,6 +3,7 @@ package com.banking.transactions.repository;
 import com.banking.transactions.exceptions.AccountNotFoundException;
 
 import com.banking.transactions.exceptions.InsufficientFundsException;
+import com.banking.transactions.model.AccountDTO;
 import com.banking.transactions.model.UserAccount;
 import org.springframework.stereotype.Repository;
 
@@ -15,15 +16,18 @@ import java.util.List;
 public class AccountRepository {
     private List<UserAccount> accounts = new ArrayList<UserAccount>();
 
-    public UserAccount createAccount(UserAccount account) {
+    public UserAccount createAccount(AccountDTO accountDTO) {
+        UserAccount account = new UserAccount(accountDTO.getFirstName(),accountDTO.getLastName(),accountDTO.getBalance());
         account.setId(accounts.size() + 1);
         accounts.add(account);
-        System.out.println(account.getBalance()); //Test
-        return account; //check
+        return account;
+    }
+
+    public UserAccount getAccount(long id) {
+        return findAccountById(id);
     }
 
     public void updateBalance(long accountId, double funds_moved){
-        //Would've been more efficient to just use a(Id-1) but this better for if change Id naming system
         UserAccount account = findAccountById(accountId);
         double newBalance = account.getBalance() + funds_moved;
         if (newBalance >= 0){
@@ -32,12 +36,10 @@ public class AccountRepository {
         else{
             throw new InsufficientFundsException(accountId);
         }
-        System.out.println(account.getId() + " " + account.getBalance()); // Test
     }
 
     private UserAccount findAccountById(long accountId){
             return accounts.stream().filter(a -> a.getId() == accountId).findFirst()
                     .orElseThrow(()-> new AccountNotFoundException(accountId));
-                    //.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find account " + accountId));
     }
 }

@@ -3,10 +3,9 @@ package com.banking.transactions.service;
 import com.banking.transactions.exceptions.InvalidAmountException;
 import com.banking.transactions.exceptions.MissingInformationException;
 import com.banking.transactions.exceptions.NullTransactionException;
+import com.banking.transactions.model.AccountDTO;
 import com.banking.transactions.model.TransactionDTO;
-import com.banking.transactions.model.UserAccount;
 import com.banking.transactions.exceptions.NegativeBalanceException;
-import lombok.SneakyThrows;
 
 public class InputValidation {
     public static void ValidateTransactionInput(TransactionDTO transaction) {
@@ -26,7 +25,7 @@ public class InputValidation {
         }
     }
 
-    public static void ValidateAccountInput(UserAccount account){
+    public static void ValidateAccountInput(AccountDTO account){
         if (account.getBalance()<0){
             throw new NegativeBalanceException();
         }
