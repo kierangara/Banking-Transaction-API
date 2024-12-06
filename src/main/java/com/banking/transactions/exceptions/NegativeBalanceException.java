@@ -1,13 +1,9 @@
-package com.banking.transactions.repository;
+package com.banking.transactions.exceptions;
 
 import org.springframework.http.HttpStatus;
 
 public class NegativeBalanceException extends RuntimeException{
-    NegativeBalanceException() {
+    public NegativeBalanceException() {
         super("Accounts cannot be created with a negative balance.");
-    }
-
-    public HttpStatus getStatus() {
-        return HttpStatus.BAD_REQUEST;
     }
 }

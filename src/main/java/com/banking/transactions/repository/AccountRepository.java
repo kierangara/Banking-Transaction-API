@@ -1,12 +1,11 @@
 package com.banking.transactions.repository;
 
-import com.banking.transactions.repository.TransactionRepository;
+import com.banking.transactions.exceptions.AccountNotFoundException;
 
+import com.banking.transactions.exceptions.InsufficientFundsException;
 import com.banking.transactions.model.UserAccount;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +16,6 @@ public class AccountRepository {
     private List<UserAccount> accounts = new ArrayList<UserAccount>();
 
     public UserAccount createAccount(UserAccount account) {
-        if (account.getBalance()<0){
-            throw new NegativeBalanceException();
-        }
         account.setId(accounts.size() + 1);
         accounts.add(account);
         System.out.println(account.getBalance()); //Test

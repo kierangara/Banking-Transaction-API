@@ -14,9 +14,9 @@ public class UserAccount {
     private double balance;
 
     public UserAccount(String firstName, String lastName, double balance) {
+        this.id = -1;
         this.firstName = firstName;
         this.lastName = lastName;
         this.balance = balance;
-        this.id = -1;
     }
 }

@@ -23,12 +23,12 @@ public class TransactionController {
         return transaction_service.createAccount(user_account);
     }
 
-    @PutMapping("/transactions")
+    @PostMapping("/transactions")
     public TransactionDTO transferFunds(@RequestBody TransactionDTO transaction) {
         return transaction_service.transferFunds(transaction);
     }
 
-    @GetMapping("/transactions/{id}")
+    @GetMapping("/accounts/{id}/transactions")
     public TransactionList getAccountTransactions(@PathVariable long id) {
         return transaction_service.getAccountTransactions(id);
     }

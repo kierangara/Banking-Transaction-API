@@ -1,8 +1,8 @@
 package com.banking.transactions.repository;
 
+import com.banking.transactions.exceptions.AccountNotFoundException;
 import com.banking.transactions.model.TransactionDTO;
 import com.banking.transactions.model.TransactionList;
-import com.banking.transactions.model.UserAccount;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -12,9 +12,8 @@ import java.util.List;
 public class TransactionRepository {
     private List<TransactionList> transactionLists = new ArrayList<TransactionList>();
 
-    public TransactionList createTransactionList(long accountId){
+    public void createTransactionList(long accountId){
         transactionLists.add(new TransactionList(accountId));
-        return findTransactionListById(accountId);
     }
 
     public TransactionDTO addTransaction(TransactionDTO transaction){

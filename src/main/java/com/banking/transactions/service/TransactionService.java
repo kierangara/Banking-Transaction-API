@@ -1,5 +1,7 @@
 package com.banking.transactions.service;
 
+import com.banking.transactions.exceptions.InvalidAmountException;
+import com.banking.transactions.exceptions.MissingInformationException;
 import com.banking.transactions.model.TransactionList;
 import com.banking.transactions.repository.AccountRepository;
 import com.banking.transactions.model.UserAccount;
@@ -18,13 +20,15 @@ public class TransactionService {
 
     public UserAccount createAccount(UserAccount account) {
         //UserAccount account = new UserAccount(firstName, lastName, initial_balance);
+        InputValidation.ValidateAccountInput(account);
         account = accountRepository.createAccount(account);
         transactionRepository.createTransactionList(account.getId());
         return account;
     }
 
     //Invalidates usage of DTO? Perform operation in repository layer?
-    public TransactionDTO transferFunds(TransactionDTO transaction) {
+    public TransactionDTO transferFunds(TransactionDTO transaction){
+        InputValidation.ValidateTransactionInput(transaction);
         accountRepository.updateBalance(transaction.getSrcAccount(), -transaction.getAmount());
         accountRepository.updateBalance(transaction.getDestAccount(), transaction.getAmount());
         return transactionRepository.addTransaction(transaction);
