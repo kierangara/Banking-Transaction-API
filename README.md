@@ -1,12 +1,13 @@
 # Banking Transaction API
 
-This repository contains a simple RESTful API for handling banking transactions. The API performs the following three (3) operations:
+This repository contains a simple RESTful API for handling banking transactions. The API performs the following four (4) operations:
 
 | URL               | Method   | Input Parameters | Description|
 |-------------------|-------------|-------------|-------------------------------------|
 | /accounts           | POST | {firstName, lastName, balance} | Create a new user account with an initial balance |
-| /transactions      | PUT | {srcAccount, destAccount, amount} | Transfer funds from one account to another |
-| /transactions/{id} | GET | N/A | Retrieve the transaction history for a given account |
+| /accounts/{id}      | GET | N/A | Retrieve the basic information for a given account |
+| /transactions      | POST | {srcAccount, destAccount, amount} | Transfer funds from one account to another |
+| /accounts/{id}/transactions | GET | N/A | Retrieve the transaction history for a given account |
 
 
 ## Prerequisites
@@ -47,13 +48,19 @@ Create at least two accounts to enable transactions.
 2. Transfer funds between two accounts:
 
 ```bash
-curl -X PUT localhost:8080/transactions -H 'Content-type:application/json' -d '{"srcAccount": "1", "destAccount": "2", "amount": "100"}'|json_pp
+curl -X POST localhost:8080/transactions -H 'Content-type:application/json' -d '{"srcAccount": "1", "destAccount": "2", "amount": "100"}'|json_pp
 ```
 
-3. View the transaction history for a given account:
+3. View the updated information for a given account (e.g. Checking updated balance after a transaction):
 
 ```bash
-curl localhost:8080/transactions/1|json_pp
+curl localhost:8080/accounts/1|json_pp
+```
+
+4. View the transaction history for a given account:
+
+```bash
+curl localhost:8080/accounts/1/transactions|json_pp
 ```
 
 API Requests can alternatively be performed via the Postman desktop app while the application is running. Postman is available for download at the link below:
