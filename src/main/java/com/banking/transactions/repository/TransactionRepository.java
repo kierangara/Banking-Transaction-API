@@ -10,17 +10,17 @@ import java.util.List;
 
 @Repository
 public class TransactionRepository {
-    private List<TransactionList> transaction_lists = new ArrayList<TransactionList>();
+    private List<TransactionList> transactionLists = new ArrayList<TransactionList>();
 
     public TransactionList createTransactionList(long accountId){
-        transaction_lists.add(new TransactionList(accountId));
+        transactionLists.add(new TransactionList(accountId));
         return findTransactionListById(accountId);
     }
 
     public TransactionDTO addTransaction(TransactionDTO transaction){
-        TransactionList src_transaction_list = findTransactionListById(transaction.src_account());
+        TransactionList src_transaction_list = findTransactionListById(transaction.getSrcAccount());
         src_transaction_list.addTransaction(transaction);
-        TransactionList dest_transaction_list = findTransactionListById(transaction.dest_account());
+        TransactionList dest_transaction_list = findTransactionListById(transaction.getDestAccount());
         dest_transaction_list.addTransaction(transaction);
         return transaction;
     }
@@ -29,7 +29,8 @@ public class TransactionRepository {
         return findTransactionListById(accountId);
     }
 
-    private TransactionList findTransactionListById(long account_id){
-        return transaction_lists.stream().filter(a -> a.getAccountId() == account_id).findFirst().get();
+    private TransactionList findTransactionListById(long accountId){
+        return transactionLists.stream().filter(a -> a.getAccountId() == accountId).findFirst()
+                .orElseThrow(()-> new AccountNotFoundException(accountId));
     }
 }

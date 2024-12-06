@@ -9,13 +9,13 @@ import lombok.*;
 public class UserAccount {
     //private @Generated @Setter(AccessLevel.PROTECTED) long id;
     private long id;
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     private double balance;
 
-    public UserAccount(String first_name, String last_name, double balance) {
-        this.first_name = first_name;
-        this.last_name = last_name;
+    public UserAccount(String firstName, String lastName, double balance) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.balance = balance;
         this.id = -1;
     }

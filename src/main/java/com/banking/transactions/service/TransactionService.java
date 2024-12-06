@@ -12,25 +12,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class TransactionService {
     @Autowired
-    private AccountRepository account_repository;
+    private AccountRepository accountRepository;
     @Autowired
-    private TransactionRepository transaction_repository;
+    private TransactionRepository transactionRepository;
 
     public UserAccount createAccount(UserAccount account) {
-        //UserAccount account = new UserAccount(first_name, last_name, initial_balance);
-        account = account_repository.createAccount(account);
-        transaction_repository.createTransactionList(account.getId());
+        //UserAccount account = new UserAccount(firstName, lastName, initial_balance);
+        account = accountRepository.createAccount(account);
+        transactionRepository.createTransactionList(account.getId());
         return account;
     }
 
     //Invalidates usage of DTO? Perform operation in repository layer?
     public TransactionDTO transferFunds(TransactionDTO transaction) {
-        account_repository.updateBalance(transaction.src_account(), -transaction.amount());
-        account_repository.updateBalance(transaction.dest_account(), transaction.amount());
-        return transaction_repository.addTransaction(transaction);
+        accountRepository.updateBalance(transaction.getSrcAccount(), -transaction.getAmount());
+        accountRepository.updateBalance(transaction.getDestAccount(), transaction.getAmount());
+        return transactionRepository.addTransaction(transaction);
     }
 
-    public TransactionList getAccountTransactions(long account_id) {
-        return transaction_repository.getAccountTransactions(account_id);
+    public TransactionList getAccountTransactions(long accountId) {
+        return transactionRepository.getAccountTransactions(accountId);
     }
 }
