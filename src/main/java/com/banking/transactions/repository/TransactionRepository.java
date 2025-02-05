@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public class TransactionRepository {
-    private List<TransactionList> transactionLists = new ArrayList<TransactionList>();
+    private final List<TransactionList> transactionLists = new ArrayList<>();
 
     public void createTransactionList(long accountId){
         transactionLists.add(new TransactionList(accountId));

@@ -14,7 +14,7 @@ import java.util.List;
 
 @Repository
 public class AccountRepository {
-    private List<UserAccount> accounts = new ArrayList<UserAccount>();
+    private final List<UserAccount> accounts = new ArrayList<>();
 
     public UserAccount createAccount(AccountDTO accountDTO) {
         UserAccount account = new UserAccount(accountDTO.getFirstName(),accountDTO.getLastName(),accountDTO.getBalance());
